@@ -14,7 +14,7 @@ liability for misuse.
 
 ---
 
-## Proofs
+## 📸 Proofs
 
 ![App Screenshot](images/1st.png)
 ![App Screenshot](images/2nd.png)
@@ -82,23 +82,6 @@ sudo apt install nikto          # Debian/Ubuntu
 # Download from https://github.com/projectdiscovery/nuclei/releases
 # and place in PATH, then update templates:
 nuclei -update-templates
-```
-
-### Option 2 – Docker (recommended for clean environment)
-
-```bash
-# Build the image (includes Nikto + Nuclei)
-docker build -t reconhawk .
-
-# Run a scan
-docker run --rm -v $(pwd)/reports:/app/reports reconhawk \
-  -t example.com --html
-
-# With AI summary
-docker run --rm \
-  -v $(pwd)/reports:/app/reports \
-  -e ANTHROPIC_API_KEY=sk-ant-... \
-  reconhawk -t example.com --html --ai-summary
 ```
 
 ---
@@ -307,24 +290,9 @@ JSONL output is parsed and each finding is ingested as a `Finding` object.
 ---
 
 ## License
-MIT License
 
-Copyright (c) 2026 ReconHawk
+MIT License © 2026 ReconHawk
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to use, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, subject to the condition that this copyright notice and permission notice are included in all copies or substantial portions of the Software.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+The Software is provided “AS IS”, without warranty of any kind, express or implied, including but not limited to merchantability, fitness for a particular purpose, and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages, or other liability arising from the use of the Software.

@@ -14,6 +14,11 @@ liability for misuse.
 
 ---
 
+## Proofs
+
+![App Screenshot](images/1st.png)
+![App Screenshot](images/2nd.png)
+
 ## Features
 
 | Module | Capabilities |

@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""
-ReconHawk - Automated Reconnaissance & Vulnerability Scanner
-A modular, CLI-based security assessment tool for authorized targets.
-"""
-
 import argparse
 import sys
 import time

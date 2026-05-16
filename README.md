@@ -300,5 +300,4 @@ JSONL output is parsed and each finding is ingested as a `Finding` object.
 ---
 
 ## License
-
 MIT License – see `LICENSE` file.

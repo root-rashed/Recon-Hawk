@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  reconhawk:
+    build: .
+    image: reconhawk:latest
+    container_name: reconhawk
+    volumes:
+      - ./reports:/app/reports      # mount local reports directory
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}   # optional, for AI summary
+    # Override CMD to scan a target:
+    #   docker-compose run reconhawk -t example.com --html --ai-summary
+    command: ["--help"]

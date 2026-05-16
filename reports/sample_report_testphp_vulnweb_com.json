@@ -1,0 +1,280 @@
+{
+  "meta": {
+    "target": {
+      "raw": "http://testphp.vulnweb.com",
+      "display": "testphp.vulnweb.com",
+      "host": "testphp.vulnweb.com",
+      "base_url": "http://testphp.vulnweb.com",
+      "scheme": "http",
+      "port": null,
+      "path": "/",
+      "is_ip": false,
+      "is_domain": true,
+      "resolved_ip": "44.228.249.3"
+    },
+    "start_time": "2025-01-15T14:22:10.123456",
+    "end_time":   "2025-01-15T14:36:47.654321"
+  },
+
+  "recon": {
+    "dns": {
+      "A":     ["44.228.249.3"],
+      "AAAA":  [],
+      "MX":    ["10 mail.vulnweb.com."],
+      "NS":    ["ns1.vulnweb.com.", "ns2.vulnweb.com."],
+      "TXT":   ["v=spf1 a mx ~all"],
+      "CNAME": [],
+      "SOA":   ["ns1.vulnweb.com. hostmaster.vulnweb.com. 2024010100 3600 900 604800 300"]
+    },
+    "subdomains": [
+      "www.vulnweb.com",
+      "mail.vulnweb.com",
+      "testphp.vulnweb.com",
+      "testhtml5.vulnweb.com",
+      "testasp.vulnweb.com",
+      "testaspnet.vulnweb.com",
+      "testfire.vulnweb.com"
+    ],
+    "headers": {
+      "Server": "nginx/1.19.0",
+      "X-Powered-By": "PHP/5.6.40",
+      "Content-Type": "text/html; charset=UTF-8",
+      "Connection": "keep-alive"
+    },
+    "technologies": [
+      "Nginx",
+      "PHP",
+      "jQuery"
+    ],
+    "server_info": {
+      "status_code": 200,
+      "final_url": "http://testphp.vulnweb.com/",
+      "content_length": "4958",
+      "content_type": "text/html; charset=UTF-8"
+    },
+    "open_ports": [
+      {"port": 80,  "service": "HTTP",  "banner": ""},
+      {"port": 443, "service": "HTTPS", "banner": ""},
+      {"port": 22,  "service": "SSH",   "banner": "SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.5"}
+    ],
+    "whois": {
+      "registrar": "GoDaddy.com, LLC",
+      "creation_date": "2012-03-14 00:00:00",
+      "expiration_date": "2026-03-14 00:00:00",
+      "name_servers": ["ns1.vulnweb.com", "ns2.vulnweb.com"],
+      "emails": ["abuse@vulnweb.com"],
+      "org": "Acunetix Ltd.",
+      "country": "MT"
+    }
+  },
+
+  "crawl": {
+    "urls": [
+      "http://testphp.vulnweb.com/",
+      "http://testphp.vulnweb.com/index.php",
+      "http://testphp.vulnweb.com/artists.php",
+      "http://testphp.vulnweb.com/cart.php",
+      "http://testphp.vulnweb.com/categories.php",
+      "http://testphp.vulnweb.com/disclaimer.php",
+      "http://testphp.vulnweb.com/guestbook.php",
+      "http://testphp.vulnweb.com/hpp/",
+      "http://testphp.vulnweb.com/login.php",
+      "http://testphp.vulnweb.com/logout.php",
+      "http://testphp.vulnweb.com/AJAX/index.php",
+      "http://testphp.vulnweb.com/search.php",
+      "http://testphp.vulnweb.com/showimage.php",
+      "http://testphp.vulnweb.com/signup.php",
+      "http://testphp.vulnweb.com/userinfo.php"
+    ],
+    "js_files": [
+      "http://testphp.vulnweb.com/arctickycanvas.js",
+      "http://testphp.vulnweb.com/jquery.js"
+    ],
+    "parameters": [
+      "artist",
+      "cat",
+      "id",
+      "page",
+      "query",
+      "searchFor",
+      "uname",
+      "pass",
+      "signup",
+      "retURL",
+      "aid"
+    ],
+    "forms": [
+      {
+        "action": "http://testphp.vulnweb.com/login.php",
+        "method": "POST",
+        "fields": [
+          {"name": "uname", "type": "text"},
+          {"name": "pass",  "type": "password"}
+        ]
+      },
+      {
+        "action": "http://testphp.vulnweb.com/search.php",
+        "method": "GET",
+        "fields": [
+          {"name": "searchFor", "type": "text"}
+        ]
+      }
+    ],
+    "emails": ["wvs@acunetix.com"],
+    "potential_secrets": [],
+    "endpoints": [
+      "http://testphp.vulnweb.com/AJAX/index.php",
+      "http://testphp.vulnweb.com/api/",
+      "http://testphp.vulnweb.com/login.php",
+      "http://testphp.vulnweb.com/admin/"
+    ],
+    "interesting_paths": [
+      "http://testphp.vulnweb.com/login.php",
+      "http://testphp.vulnweb.com/admin/",
+      "http://testphp.vulnweb.com/robots.txt"
+    ]
+  },
+
+  "vulns": {
+    "critical": [
+      {
+        "title": "Potential SQL Injection (Error-Based)",
+        "severity": "critical",
+        "description": "SQL error message visible in response when single-quote injected. Possible error-based SQL injection.",
+        "url": "http://testphp.vulnweb.com/artists.php?artist=1'",
+        "evidence": "You have an error in your SQL syntax...",
+        "tool": "custom",
+        "cwe": "CWE-89",
+        "remediation": "Use parameterised queries/prepared statements."
+      },
+      {
+        "title": "Local File Inclusion (LFI)",
+        "severity": "critical",
+        "description": "Parameter 'page' allows reading arbitrary local files.",
+        "url": "http://testphp.vulnweb.com/showimage.php?file=../../../../../../etc/passwd",
+        "evidence": "/etc/passwd content in response",
+        "tool": "custom",
+        "cwe": "CWE-22",
+        "remediation": "Validate and sanitize file path inputs; use allowlists."
+      }
+    ],
+    "high": [
+      {
+        "title": "Potential Reflected XSS",
+        "severity": "high",
+        "description": "XSS payload reflected unencoded in response.",
+        "url": "http://testphp.vulnweb.com/search.php?searchFor=%3Cscript%3Ealert%281%29%3C%2Fscript%3E",
+        "evidence": "Payload '<script>alert(1)</script>' reflected in body",
+        "tool": "custom",
+        "cwe": "CWE-79",
+        "remediation": "Encode all user-supplied input before rendering in HTML."
+      },
+      {
+        "title": "No HTTPS / Unencrypted Traffic",
+        "severity": "high",
+        "description": "Target does not use HTTPS; all traffic transmitted in cleartext.",
+        "url": "http://testphp.vulnweb.com",
+        "evidence": "",
+        "tool": "custom",
+        "cwe": "CWE-319",
+        "remediation": "Obtain an SSL/TLS certificate and redirect all HTTP to HTTPS."
+      },
+      {
+        "title": "Nikto: OSVDB-3233: /phpinfo.php: PHP is installed, and a test script which runs phpinfo() was found.",
+        "severity": "high",
+        "description": "+ OSVDB-3233: /phpinfo.php: PHP is installed, and a test script which runs phpinfo() was found.",
+        "url": "http://testphp.vulnweb.com",
+        "evidence": "",
+        "tool": "nikto",
+        "cwe": "",
+        "remediation": ""
+      }
+    ],
+    "medium": [
+      {
+        "title": "Missing HSTS Header",
+        "severity": "medium",
+        "description": "HTTP Strict Transport Security not set; allows SSL stripping.",
+        "url": "http://testphp.vulnweb.com",
+        "evidence": "",
+        "tool": "custom",
+        "cwe": "CWE-319",
+        "remediation": "Add: Strict-Transport-Security: max-age=31536000; includeSubDomains"
+      },
+      {
+        "title": "Missing Content-Security-Policy Header",
+        "severity": "medium",
+        "description": "No CSP header; increases XSS risk.",
+        "url": "http://testphp.vulnweb.com",
+        "evidence": "",
+        "tool": "custom",
+        "cwe": "CWE-693",
+        "remediation": "Define a restrictive Content-Security-Policy header."
+      },
+      {
+        "title": "Missing X-Frame-Options Header",
+        "severity": "medium",
+        "description": "Page can be embedded in iframes; clickjacking risk.",
+        "url": "http://testphp.vulnweb.com",
+        "evidence": "",
+        "tool": "custom",
+        "cwe": "CWE-1021",
+        "remediation": "Add: X-Frame-Options: DENY or SAMEORIGIN"
+      },
+      {
+        "title": "Clickjacking Vulnerability",
+        "severity": "medium",
+        "description": "No anti-framing headers found; page may be embeddable in iframes.",
+        "url": "http://testphp.vulnweb.com",
+        "evidence": "",
+        "tool": "custom",
+        "cwe": "CWE-1021",
+        "remediation": "Set X-Frame-Options: DENY or CSP frame-ancestors 'none'."
+      }
+    ],
+    "low": [
+      {
+        "title": "Server Version Disclosure",
+        "severity": "low",
+        "description": "Server header reveals version information: nginx/1.19.0",
+        "url": "http://testphp.vulnweb.com",
+        "evidence": "Server: nginx/1.19.0",
+        "tool": "custom",
+        "cwe": "CWE-200",
+        "remediation": "Configure server to omit or genericize the Server header."
+      },
+      {
+        "title": "Missing X-Content-Type-Options Header",
+        "severity": "low",
+        "description": "Browser may MIME-sniff responses; enables some XSS vectors.",
+        "url": "http://testphp.vulnweb.com",
+        "evidence": "",
+        "tool": "custom",
+        "cwe": "CWE-16",
+        "remediation": "Add: X-Content-Type-Options: nosniff"
+      }
+    ],
+    "info": [
+      {
+        "title": "Technology Disclosure via X-Powered-By",
+        "severity": "info",
+        "description": "X-Powered-By header reveals backend technology: PHP/5.6.40",
+        "url": "http://testphp.vulnweb.com",
+        "evidence": "X-Powered-By: PHP/5.6.40",
+        "tool": "custom",
+        "cwe": "CWE-200",
+        "remediation": "Remove the X-Powered-By header."
+      },
+      {
+        "title": "Robots.txt Accessible",
+        "severity": "info",
+        "description": "Sensitive resource accessible at http://testphp.vulnweb.com/robots.txt",
+        "url": "http://testphp.vulnweb.com/robots.txt",
+        "evidence": "HTTP 200",
+        "tool": "custom",
+        "cwe": "CWE-538",
+        "remediation": "Restrict access to /robots.txt via server configuration."
+      }
+    ]
+  }
+}

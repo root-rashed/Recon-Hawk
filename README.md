@@ -248,6 +248,8 @@ Dark-mode, fully self-contained HTML with:
 - Subdomain list, open ports, DNS records
 - Crawl results (URLs, JS files, parameters)
 
+![App Screenshot](images/report.png)
+
 ---
 
 ## AI Summary (Bonus)
